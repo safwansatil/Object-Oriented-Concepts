@@ -11,7 +11,7 @@ public abstract class Person {
         this.name = name;
         this.email = email;
     }
-    
+
     boolean borrowBook(Book book){
         return this.borrowedBooks.add(book);
     }
