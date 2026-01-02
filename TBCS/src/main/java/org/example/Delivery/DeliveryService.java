@@ -12,6 +12,6 @@ public class DeliveryService {
 
     }
     public void markDelivered(Order order){
-        order.setStatus(OrderStatus.DELIVERED);
+        order.setOrderStatus(OrderStatus.DELIVERED);
     }
 }

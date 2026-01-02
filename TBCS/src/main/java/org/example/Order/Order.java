@@ -7,19 +7,22 @@ import org.example.Customer.Customer;
 import java.util.List;
 
 public class Order {
-    private String orderId;
-    Customer customer;
-    List<OrderItem> items;
+    private int orderId;
+    private Customer customer;
+    private List<OrderItem> items;
     OrderType type;
     private OrderStatus status;
     private double total;
-    public String getOrderId(){
+    public int getOrderId(){
         return this.orderId;
+    }
+    public void setOrderId(int id){
+        this.orderId = id;
     }
     public OrderStatus getOrderStatus(){
         return  this.status;
     }
-    public void setStatus(OrderStatus status){
+    public void setOrderStatus(OrderStatus status){
         this.status = status;
     }
     public double getOrderTotal(){
@@ -28,5 +31,11 @@ public class Order {
     public void setTotalAmount(double amn){
         this.total = amn;
     }
+    public void setCustomer(Customer customer){
+        this.customer = customer;
+    }
 
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
 }

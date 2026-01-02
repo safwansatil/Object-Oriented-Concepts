@@ -1,14 +1,18 @@
 package org.example.Core;
 
 public class QueueManager {
-    int currentOrderNum;
-    int generateOrderNum(){
-        return 0;
+    private int currentOrderNum = 0;
+    public int generateOrderNum(){
+        this.currentOrderNum++;
+        return this.currentOrderNum;
     }
     int getCurrentServingOrderNum(){
         return 0;
     }
     void updateCurrentServingOrder(int orderNum){
 
+    }
+    public int getCurrentOrderNum(){
+        return  this.currentOrderNum;
     }
 }

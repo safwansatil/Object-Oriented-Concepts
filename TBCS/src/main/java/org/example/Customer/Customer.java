@@ -7,7 +7,10 @@ public abstract class Customer {
     private String address;
     private String contact;
     abstract double calculateDisc(int monthlyOrders);
-
+    public Customer(String name, String contact){
+        this.name = name;
+        this.contact = contact;
+    }
     public String getName(){
         return this.name;
     }
