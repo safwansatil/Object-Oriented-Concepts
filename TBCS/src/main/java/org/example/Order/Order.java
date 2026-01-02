@@ -10,7 +10,7 @@ public class Order {
     private int orderId;
     private Customer customer;
     private List<OrderItem> items;
-    OrderType type;
+    private OrderType type;
     private OrderStatus status;
     private double total;
     public int getOrderId(){
@@ -34,7 +34,9 @@ public class Order {
     public void setCustomer(Customer customer){
         this.customer = customer;
     }
-
+    public OrderType getOrderType(){
+        return this.type;
+    }
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }

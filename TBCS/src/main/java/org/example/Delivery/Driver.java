@@ -1,10 +1,13 @@
 package org.example.Delivery;
 
 public class Driver {
-    String name;
+
     private boolean isAvailable;
-    Vehicle vehicle;
     private String licenseNum;
+    public Driver(String licenseNum){
+        this.licenseNum = licenseNum;
+        this.isAvailable = true;
+    }
     public String getLicenseNum(){
         return  this.licenseNum;
     }

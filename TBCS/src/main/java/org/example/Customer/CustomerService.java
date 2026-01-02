@@ -9,7 +9,14 @@ public class CustomerService {
     Order placeOrder(Customer customer, List<OrderItem> items){
         return null;
     }
-    void submitFeedback(Order order, double rating, String feedback){
+    public void submitFeedback(Order order, int rating, String comment) {
+        Feedback feedback = new Feedback(rating, comment);
 
+        System.out.println(
+                "Feedback received for Order " + order.getOrderId()
+        );
+        System.out.println("Rating: " + feedback.getRating());
+        System.out.println("Feedback: " + feedback.getFeedback());
     }
+
 }
