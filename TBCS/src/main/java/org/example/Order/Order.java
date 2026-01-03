@@ -40,4 +40,11 @@ public class Order {
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }
+    public void printOrderDetails(){
+        System.out.println("Order Details: ");
+        System.out.println("\tOrder ID: "+ this.orderId);
+        System.out.println("\tCustomer: "+ this.customer.getName());
+        System.out.println("\tOrder Status: "+ this.getOrderStatus());
+        System.out.println("\tTotal Price: "+this.getOrderTotal());
+    }
 }

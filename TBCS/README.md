@@ -75,7 +75,7 @@ This repository follows the same breakdown inside `src/main/java/org/example/` w
 
 Example output screenshots:
 
-![Output](./img/output.png)
+![Output](./img/output2.png)
 
 ### Running the Project
 

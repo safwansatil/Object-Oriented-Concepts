@@ -24,6 +24,8 @@ public class OrderService {
             total += item.getItemTotal();
         }
         order.setTotalAmount(total);
+        System.out.println("Order Created Successfully!!");
+        order.printOrderDetails();
         return order;
     }
     double calculateTotal(List<OrderItem> items){
