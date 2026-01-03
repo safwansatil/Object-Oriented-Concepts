@@ -19,6 +19,14 @@ The design follows a layered, object-oriented approach. High-level UML:
 
 ![UMl](./img/uml.png)
 
+## Demonstration Output 
+
+
+Example output screenshots:
+
+![Output](./img/output2.png)
+
+
 ### Why This Design 
 
 - **Layered responsibilities**: separation between models, services, and core/controller simplifies reasoning and testing.
@@ -70,12 +78,6 @@ This repository follows the same breakdown inside `src/main/java/org/example/` w
 
 
 
-## Demonstration Output 
-
-
-Example output screenshots:
-
-![Output](./img/output2.png)
 
 ### Running the Project
 
