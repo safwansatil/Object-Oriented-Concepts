@@ -4,6 +4,7 @@ import org.example.Core.OrderStatus;
 import org.example.Order.Order;
 
 public class DeliveryService {
+
     public boolean validateLicense(Driver driver,String licenseNum){
         return driver.getLicenseNum().equals(licenseNum);
     }

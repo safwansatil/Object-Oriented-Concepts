@@ -6,12 +6,6 @@ public class QueueManager {
         this.currentOrderNum++;
         return this.currentOrderNum;
     }
-    int getCurrentServingOrderNum(){
-        return 0;
-    }
-    void updateCurrentServingOrder(int orderNum){
-
-    }
     public int getCurrentOrderNum(){
         return  this.currentOrderNum;
     }
