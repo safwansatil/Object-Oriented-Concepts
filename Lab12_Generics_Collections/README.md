@@ -1,8 +1,10 @@
 # Student Record Management System (SWE4302)
-
+```text
 Name: M Safwan Hasan Khan
 Student Id: 230042117
-github link : https://github.com/safwansatil/Object-Oriented-Concepts/tree/main/Lab12_Generics_Collections
+github link : 
+```
+https://github.com/safwansatil/Object-Oriented-Concepts/tree/main/Lab12_Generics_Collections
 
 ---
 
