@@ -2,9 +2,8 @@
 ```text
 Name: M Safwan Hasan Khan
 Student Id: 230042117
-github link : 
+github link : https://github.com/safwansatil/Object-Oriented-Concepts/tree/main/Lab12_Generics_Collections
 ```
-https://github.com/safwansatil/Object-Oriented-Concepts/tree/main/Lab12_Generics_Collections
 
 ---
 
@@ -29,7 +28,6 @@ src/main/java/org/example/
 ```
 
 ## System Design
-
 ```mermaid
 classDiagram
     class Store~T~ {
@@ -85,7 +83,9 @@ classDiagram
     Main ..> StudentService : uses
     Main ..> DataStore : creates
     Main ..> StudentServiceImpl : creates
-```
+``` 
+
+<!-- ![Class Diagram](assets/img/class_diagram.png) -->
 
 Store is defined as an interface to decouple the storage mechanism from the application logic. Student is immutable to prevent unintended side effects when instances are shared across layers. The Main class depends exclusively on the Store and StudentService interfaces to adhere to the Dependency Inversion Principle.
 
