@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 34 33% 97%; /* #FAF8F4 */
+    --foreground: 60 4% 10%; /* #1A1A18 */
+
+    --card: 34 33% 97%;
+    --card-foreground: 60 4% 10%;
+
+    --popover: 34 33% 97%;
+    --popover-foreground: 60 4% 10%;
+
+    --primary: 97 56% 20%; /* #2D5016 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 41 18% 92%; /* #F0EDE6 */
+    --secondary-foreground: 60 4% 10%;
+
+    --muted: 41 7% 40%; /* #6B6760 */
+    --muted-foreground: 41 7% 40%;
+
+    --accent: 97 56% 20%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 6 63% 46%; /* #C0392B */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 36 15% 86%; /* #E2DDD5 */
+    --input: 36 15% 86%;
+    --ring: 97 56% 20%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* No-line rule and light background focus, so we keep it light mostly */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Editorial Typography */
+.display-lg {
+  @apply font-serif text-5xl md:text-7xl font-semibold leading-tight tracking-tight;
+}
+
+.headline-md {
+  @apply font-serif text-3xl md:text-4xl font-semibold leading-snug;
+}
+
+.title-md {
+  @apply font-sans text-xl md:text-2xl font-medium;
+}
+
+.body-lg {
+  @apply font-sans text-lg text-text-muted leading-relaxed;
+}
+
+.label-md {
+  @apply font-sans text-sm font-medium tracking-wide;
+}
+
+/* No-Line Rule Utilities */
+.surface-card {
+  @apply bg-white rounded-card shadow-sm transition-all duration-300;
+}
+
+.surface-container {
+  @apply bg-surface rounded-card;
+}
+
+/* Glassmorphism for View Cart / Sticky Bars */
+.glass {
+  @apply bg-white/80 backdrop-blur-xl border-t border-border/20;
+}
+
+/* Step Tracker Pulse Animation */
+.pulse-dot {
+  @apply w-3 h-3 bg-accent rounded-full relative;
+}
+
+.pulse-dot::before {
+  content: '';
+  @apply absolute top-0 left-0 w-full h-full bg-accent rounded-full animate-pulse-dot opacity-50;
+}

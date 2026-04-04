@@ -1,0 +1,42 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.foodapp:IUT_CafePearlJam >--------------------
+[INFO] Building FoodApp Backend 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ IUT_CafePearlJam ---
+[INFO] Deleting D:\iut student life\labtasks\swe4302\IUT_CafePearlJam\PearlJam_Backend\target
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ IUT_CafePearlJam ---
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ IUT_CafePearlJam ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 81 source files with javac [debug target 23] to target\classes
+[INFO] /D:/iut student life/labtasks/swe4302/IUT_CafePearlJam/PearlJam_Backend/src/main/java/com/foodapp/api/servlet/OrderServlet.java: Some input files use unchecked or unsafe operations.
+[INFO] /D:/iut student life/labtasks/swe4302/IUT_CafePearlJam/PearlJam_Backend/src/main/java/com/foodapp/api/servlet/OrderServlet.java: Recompile with -Xlint:unchecked for details.
+[INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/iut student life/labtasks/swe4302/IUT_CafePearlJam/PearlJam_Backend/src/main/java/com/foodapp/api/servlet/UserServlet.java:[52,40] incompatible types: int cannot be converted to java.lang.String
+[ERROR] /D:/iut student life/labtasks/swe4302/IUT_CafePearlJam/PearlJam_Backend/src/main/java/com/foodapp/api/servlet/UserServlet.java:[77,40] incompatible types: int cannot be converted to java.lang.String
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.920 s
+[INFO] Finished at: 2026-04-04T09:04:57+06:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project IUT_CafePearlJam: Compilation failure: Compilation failure: 
+[ERROR] /D:/iut student life/labtasks/swe4302/IUT_CafePearlJam/PearlJam_Backend/src/main/java/com/foodapp/api/servlet/UserServlet.java:[52,40] incompatible types: int cannot be converted to java.lang.String
+[ERROR] /D:/iut student life/labtasks/swe4302/IUT_CafePearlJam/PearlJam_Backend/src/main/java/com/foodapp/api/servlet/UserServlet.java:[77,40] incompatible types: int cannot be converted to java.lang.String
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

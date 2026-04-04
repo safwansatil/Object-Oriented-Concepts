@@ -1,0 +1,44 @@
+Project Basics
+ Food Delivery Application
+ Single person project
+ Java
+Features (You can choose from these or add your own)
+
+User End Features
+Show nearest restaurants based on delivery address
+Pick restaurant
+choose from menu
+place order
+Sort/search restaurants and menus
+Apply discounts/coupons
+Track food preparation and delivery progress
+Payment system integration
+Restaurant End Features
+Register as restaurant and create menu
+Set menu item availability (available/not available)
+Menu items should include:
+Quantity tracking
+Add-on / customization
+Other customization options
+Set opening/closing schedules
+Receive payments
+Select delivery riders and options
+Design Requirements
+ One class per functionality
+ Keep it simple, concise, modular
+ Organize classes into proper packages
+ Maintain version control repository
+Technical Implementation
+Data Storage
+Use  for data storage/retrieval
+Database is optional (if used, you have to elaborate your database design/schema)
+UI Options
+Use any Java based UI system (could be  or ) for the interface.
+Any other web based front-end would also be appreciated but the implementation of data-handling and functionalities should be done through Java.
+Web Service API inclusion
+Your project must contain a handful of WSDL API exposed. The exposed API should be accessible through a URL and should return some queried information. Example:  You might expose an API which takes in the name of an area as the input and returns the available restaurants and their delivery details.
+Important Notes
+These features are suggestions, not strict requirements
+Be creative within the project constraints
+Focus on good OOP design and clean code structure
+Make sure your project is well-organized and documented
