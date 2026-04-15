@@ -17,6 +17,3 @@ forced to depend on interfaces they do not use.
  low-level modules. Both should depend on abstractions.   Abstractions should not depend on details. Details should 
  depend on abstractions.
 
-The objective is modify each of the examples in order to not violate the corresponding SOLID principle.
-
-## You can see solution adopted to every problem in a separated branch.
