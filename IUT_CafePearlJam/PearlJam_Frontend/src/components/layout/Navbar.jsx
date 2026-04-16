@@ -19,7 +19,7 @@ export function Navbar() {
   const navLinks = [
     { name: 'Restaurants', path: '/restaurants' },
     { name: 'How it works', path: '/#how-it-works' },
-    { name: 'Dashboard', path: '/dashboard', auth: true },
+    { name: 'Dashboard', path: '/dashboard', auth: true, role: 'RESTAURANT_OWNER' },
   ];
 
   return (
@@ -35,7 +35,7 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            (!link.auth || isAuthenticated) && (
+            (!link.auth || isAuthenticated) && (!link.role || user?.role === link.role) && (
               <Link 
                 key={link.name} 
                 to={link.path} 
@@ -106,7 +106,7 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="absolute top-20 left-0 w-full bg-white border-b border-border p-6 md:hidden flex flex-col gap-6 shadow-xl animate-in slide-in-from-top-4">
           {navLinks.map((link) => (
-            (!link.auth || isAuthenticated) && (
+            (!link.auth || isAuthenticated) && (!link.role || user?.role === link.role) && (
               <Link 
                 key={link.name} 
                 to={link.path} 

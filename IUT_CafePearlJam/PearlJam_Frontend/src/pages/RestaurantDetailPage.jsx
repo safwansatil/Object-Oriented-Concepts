@@ -9,7 +9,6 @@ import { OrderSummaryPanel } from '../components/order/OrderSummaryPanel';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { EmptyState } from '../components/common/EmptyState';
 import { Star, Clock, Info, ArrowLeft, ChevronRight } from 'lucide-react';
-import { Button } from '../components/ui/Button';
 import { cn } from '../lib/utils';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '../components/ui/Dialog';
 import { Badge } from '../components/ui/Badge';
@@ -20,7 +19,7 @@ import { Badge } from '../components/ui/Badge';
 export function RestaurantDetailPage() {
   const { id } = useParams();
   const { data: restaurant, isLoading: isResLoading } = useRestaurant(id);
-  const { data: menuByCategory, isLoading: isMenuLoading } = useMenu(id);
+  const { data: menuByCategory = {}, isLoading: isMenuLoading } = useMenu(id);
   const { addItem, restaurantId: cartResId, clearCart } = useCartStore();
 
   const [activeCategory, setActiveCategory] = useState('');
@@ -125,7 +124,7 @@ export function RestaurantDetailPage() {
       <div className="sticky top-20 z-40 bg-white/90 backdrop-blur-md border-b border-border/10 py-4 shadow-sm overflow-x-auto no-scrollbar">
         <div className="container mx-auto px-6 flex items-center gap-4">
           <div className="flex items-center gap-8 pr-8 border-r border-border/20 shrink-0">
-            {Array.from(menuByCategory.keys()).map((cat) => (
+            {Object.keys(menuByCategory).map((cat) => (
               <button
                 key={cat}
                 onClick={() => scrollToCategory(cat)}
@@ -148,7 +147,7 @@ export function RestaurantDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Menu Sections */}
           <div className="lg:col-span-8 space-y-20">
-            {Array.from(menuByCategory.entries()).map(([cat, items]) => (
+            {Object.entries(menuByCategory).map(([cat, items]) => (
               <section 
                 key={cat} 
                 id={cat}

@@ -1,5 +1,6 @@
 package com.foodapp.api.servlet;
 
+import com.foodapp.api.ApiResponse;
 import com.foodapp.util.JsonMapper;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,14 +19,14 @@ public abstract class BaseServlet extends HttpServlet {
         resp.setStatus(status);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonMapper.toJson(body));
+        resp.getWriter().write(jsonMapper.toJson(ApiResponse.success(body)));
     }
 
     protected void writeError(HttpServletResponse resp, int status, String message) throws IOException {
         resp.setStatus(status);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write("{\"error\": \"" + message + "\"}");
+        resp.getWriter().write(jsonMapper.toJson(ApiResponse.error(message)));
     }
 
     protected String readBody(HttpServletRequest req) throws IOException {

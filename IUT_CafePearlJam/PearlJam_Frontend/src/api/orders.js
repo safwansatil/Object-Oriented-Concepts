@@ -1,25 +1,29 @@
 import client from './client'
 
 export const placeOrder = (orderData) => {
-  return client.post('/orders', orderData)
+  return client.post('/api/orders', orderData)
 }
 
 export const getOrderById = (id) => {
-  return client.get(`/orders/${id}`)
+  return client.get(`/api/orders/${id}`)
 }
 
-export const getMyOrders = () => {
-  return client.get('/orders/my')
+export const getOrderStatus = (id) => {
+  return client.get(`/api/orders/${id}/status`)
 }
 
-export const getAvailableOrders = () => {
-  return client.get('/orders/available')
+export const getOrdersByCustomer = (customerId) => {
+  return client.get(`/api/orders/customer/${customerId}`)
 }
 
-export const claimOrder = (orderId, riderId) => {
-  return client.patch(`/orders/${orderId}/assign`, { riderId })
+export const updateOrderStatus = (id, status, actorId = 'restaurant-owner') => {
+  return client.patch(`/api/orders/${id}/status`, { status, actorId })
 }
 
-export const updateOrderStatus = (id, status) => {
-  return client.patch(`/orders/${id}/status`, { status })
+export const assignRider = (id, riderId) => {
+  return client.patch(`/api/orders/${id}/assign-rider`, { riderId })
+}
+
+export const processPayment = (id) => {
+  return client.patch(`/api/orders/${id}/payment`, {})
 }

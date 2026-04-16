@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 /**
  * Footer: The footer component for the application.
@@ -11,10 +11,9 @@ export function Footer() {
     {
       title: 'PearlJam',
       links: [
-        { name: 'About Us', path: '/about' },
         { name: 'How it works', path: '#how-it-works' },
         { name: 'Restaurants', path: '/restaurants' },
-        { name: 'Contact Us', path: '/contact' },
+        { name: 'Login', path: '/login' },
       ],
     },
   ];
@@ -33,12 +32,8 @@ export function Footer() {
               Bringing the freshest editorial-grade culinary experiences directly to your doorstep. We curate. We deliver. You savour.
             </p>
             <div className="flex items-center gap-4">
-              <a href="https://github.com/safwan-satil" target="_blank" rel="noopener noreferrer" className="label-md font-bold text-accent hover:underline">
+              <a href="https://github.com/safwansatil" target="_blank" rel="noopener noreferrer" className="label-md font-bold text-accent hover:underline">
                 GitHub
-              </a>
-              <span className="text-text-muted">•</span>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="label-md font-bold text-accent hover:underline">
-                LinkedIn
               </a>
             </div>
           </div>

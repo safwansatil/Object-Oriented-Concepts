@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
 import { useAuth } from '../hooks/useAuth';
-import { placeOrder } from '../api/orders';
-import { validateCoupon } from '../api/coupons';
+import { placeOrder, processPayment } from '../api/orders';
 import { OrderSummaryPanel } from '../components/order/OrderSummaryPanel';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label'; // Need to create this or use a simple one
 import { MapPin, CreditCard, Tag, ArrowRight, ShieldCheck, Truck } from 'lucide-react';
-import { cn } from '../lib/utils';
 import { useMutation } from '@tanstack/react-query';
 import { Badge } from '../components/ui/Badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '../components/ui/Dialog';
 
 /**
  * CheckoutPage: Order confirmation and payment flow.
@@ -23,38 +20,37 @@ export function CheckoutPage() {
   const { items, restaurantId, getSubtotal, clearCart } = useCartStore();
   
   const [address, setAddress] = useState('');
+  const [area, setArea] = useState('');
   const [couponCode, setCouponCode] = useState('');
-  const [appliedCoupon, setAppliedCoupon] = useState(null);
-  const [couponError, setCouponError] = useState('');
+  const [placeError, setPlaceError] = useState('');
+  const [paymentMessage, setPaymentMessage] = useState('');
 
   const subtotal = getSubtotal();
   const deliveryFee = 5.00;
-  const discount = appliedCoupon ? (subtotal * appliedCoupon.discountPercent / 100) : 0;
-  const total = subtotal + deliveryFee - discount;
+  const total = subtotal + deliveryFee;
 
   const orderMutation = useMutation({
     mutationFn: (orderData) => placeOrder(orderData),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      setPlaceError('');
+      try {
+        const payment = await processPayment(data.id);
+        setPaymentMessage(payment?.message || 'Payment processed (simulated).');
+      } catch (e) {
+        setPaymentMessage('Order placed, but payment confirmation failed.');
+      }
       clearCart();
       navigate(`/order/${data.id}`);
     },
-  });
-
-  const couponMutation = useMutation({
-    mutationFn: (code) => validateCoupon(code, subtotal),
-    onSuccess: (data) => {
-      setAppliedCoupon(data);
-      setCouponError('');
-    },
-    onError: (err) => {
-      setCouponError(err.message || 'Invalid coupon code');
-      setAppliedCoupon(null);
-    },
+    onError: (err) => setPlaceError(err.message || 'Could not place order.'),
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!address.trim()) return;
+    if (!address.trim() || !area.trim()) {
+      setPlaceError('Delivery address and area are required.');
+      return;
+    }
 
     const orderData = {
       customerId: user.id,
@@ -65,8 +61,10 @@ export function CheckoutPage() {
         addonIds: item.selectedAddons.map(a => a.id),
       })),
       deliveryAddress: address,
-      couponCode: appliedCoupon?.code,
-      paymentMethod: 'CREDIT_CARD', // Hardcoded for demo
+      deliveryArea: area.trim(),
+      couponCode: couponCode.trim() || undefined,
+      specialInstructions: '',
+      paymentMethod: 'CARD',
     };
 
     orderMutation.mutate(orderData);
@@ -116,6 +114,10 @@ export function CheckoutPage() {
                   onChange={(e) => setAddress(e.target.value)}
                   required
                 />
+              </div>
+              <div className="space-y-4">
+                <Label className="label-md font-bold uppercase tracking-widest text-[10px]">Delivery Area</Label>
+                <Input value={area} onChange={(e) => setArea(e.target.value)} placeholder="e.g. Gulshan" required />
               </div>
             </div>
 
@@ -168,27 +170,19 @@ export function CheckoutPage() {
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
                     />
-                    <Button 
-                      variant="outline" 
-                      onClick={() => couponMutation.mutate(couponCode)}
-                      disabled={!couponCode || couponMutation.isPending}
-                    >
-                      {couponMutation.isPending ? '...' : 'Apply'}
+                    <Button variant="outline" disabled>
+                      Applied on Place Order
                     </Button>
                   </div>
-                  
-                  {couponError && <p className="mt-2 text-xs text-danger font-medium">{couponError}</p>}
-                  {appliedCoupon && (
-                    <p className="mt-2 text-xs text-accent font-bold">
-                      SUCCESS! {appliedCoupon.discountPercent}% OFF APPLIED
-                    </p>
-                  )}
+                  <p className="mt-2 text-xs text-text-muted">
+                    Coupon is validated and applied by the backend during order placement.
+                  </p>
                 </div>
 
                 <div className="p-8 bg-accent text-white group">
                   <Button 
                     className="w-full bg-white text-accent hover:bg-white/90 rounded-pill h-16 text-lg font-bold shadow-xl transition-all group-active:scale-95"
-                    disabled={!address.trim() || orderMutation.isPending}
+                    disabled={!address.trim() || !area.trim() || orderMutation.isPending}
                     onClick={handleSubmit}
                   >
                     {orderMutation.isPending ? (
@@ -205,6 +199,8 @@ export function CheckoutPage() {
                   </p>
                 </div>
               </div>
+              {placeError && <p className="text-xs text-danger font-bold">{placeError}</p>}
+              {paymentMessage && <p className="text-xs text-accent font-bold">{paymentMessage}</p>}
 
               <div className="flex items-center gap-4 p-6 bg-surface/30 rounded-card border border-border/10">
                 <Truck size={24} className="text-accent shrink-0" />

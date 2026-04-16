@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { getRestaurants, getRestaurantById } from '../api/restaurants'
 
-export const useRestaurants = (area, cuisine) => {
+export const useRestaurants = (filters) => {
   return useQuery({
-    queryKey: ['restaurants', area, cuisine],
-    queryFn: () => getRestaurants(area, cuisine),
-    enabled: !!area,
+    queryKey: ['restaurants', filters],
+    queryFn: () => getRestaurants(filters),
   })
 }
 

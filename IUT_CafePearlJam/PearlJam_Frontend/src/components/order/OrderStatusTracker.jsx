@@ -11,8 +11,8 @@ export function OrderStatusTracker({ status, updatedAt }) {
     { id: 'PENDING', label: 'Order Received', icon: Clock, desc: 'Waiting for restaurant confirmation' },
     { id: 'CONFIRMED', label: 'Confirmed', icon: CheckCircle2, desc: 'Restaurant has accepted your order' },
     { id: 'PREPARING', label: 'Preparing', icon: ChefHat, desc: 'Chef is crafting your meal' },
-    { id: 'READY', label: 'Ready', icon: PackageCheck, desc: 'Order is packed and ready for pickup' },
-    { id: 'DELIVERING', label: 'On the Way', icon: Truck, desc: 'Courier is heading to your location' },
+    { id: 'READY_FOR_PICKUP', label: 'Ready', icon: PackageCheck, desc: 'Order is packed and ready for pickup' },
+    { id: 'OUT_FOR_DELIVERY', label: 'On the Way', icon: Truck, desc: 'Courier is heading to your location' },
     { id: 'DELIVERED', label: 'Delivered', icon: CheckCircle2, desc: 'Enjoy your meal!' },
   ];
 
@@ -39,7 +39,7 @@ export function OrderStatusTracker({ status, updatedAt }) {
         <div>
           <h3 className="headline-md text-3xl mb-1">Tracking Order</h3>
           <p className="label-md font-bold text-accent uppercase tracking-widest">
-            Last Update: {new Date(updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            Last Update: {updatedAt ? new Date(updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A'}
           </p>
         </div>
         <div className="hidden lg:block">

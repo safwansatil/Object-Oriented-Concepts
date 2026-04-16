@@ -18,11 +18,11 @@ export function StatusBadge({ status }) {
       label: 'Preparing',
       classes: 'bg-status-preparing/10 text-status-preparing',
     },
-    READY: {
+    READY_FOR_PICKUP: {
       label: 'Ready',
       classes: 'bg-status-ready/10 text-status-ready',
     },
-    DELIVERING: {
+    OUT_FOR_DELIVERY: {
       label: 'Delivering',
       classes: 'bg-status-delivering/10 text-status-delivering',
     },

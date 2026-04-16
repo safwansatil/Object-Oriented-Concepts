@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '../ui/Dialog';
 import { Button } from '../ui/Button';
-import { Checkbox } from '../../components/ui/Checkbox'; // Need to create this
-import { Label } from '../../components/ui/Label'; // Need to create this
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import PropTypes from 'prop-types';
@@ -22,7 +20,7 @@ export function AddonSelector({ item, isOpen, onOpenChange, onConfirm }) {
     );
   };
 
-  const totalPrice = (item.price + selectedAddons.reduce((sum, a) => sum + a.price, 0)) * quantity;
+  const totalPrice = (Number(item.basePrice || 0) + selectedAddons.reduce((sum, a) => sum + (a.extraPrice || 0), 0)) * quantity;
 
   const handleConfirm = () => {
     onConfirm({
@@ -52,7 +50,7 @@ export function AddonSelector({ item, isOpen, onOpenChange, onConfirm }) {
             <div className="flex items-center justify-between">
               <DialogTitle className="headline-md mb-2">{item.name}</DialogTitle>
               <span className="font-serif text-2xl font-bold text-accent">
-                ${item.price.toFixed(2)}
+                ${Number(item.basePrice || 0).toFixed(2)}
               </span>
             </div>
             <DialogDescription className="body-lg text-sm">
@@ -86,7 +84,7 @@ export function AddonSelector({ item, isOpen, onOpenChange, onConfirm }) {
                       <span className="label-md font-semibold text-text-primary">{addon.name}</span>
                     </div>
                     <span className="label-md text-text-muted">
-                      +${addon.price.toFixed(2)}
+                  +${Number(addon.extraPrice || 0).toFixed(2)}
                     </span>
                   </div>
                 ))}

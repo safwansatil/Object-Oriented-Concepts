@@ -18,13 +18,7 @@ export function LandingPage() {
     navigate(`/restaurants?area=${encodeURIComponent(area)}`);
   };
 
-  const cuisines = [
-    { name: 'Italian', icon: '🍷' },
-    { name: 'Japanese', icon: '🍣' },
-    { name: 'French', icon: '🥐' },
-    { name: 'Healthy', icon: '🌿' },
-    { name: 'Artisanal', icon: '🥖' },
-  ];
+  const cuisines = ['Burger', 'Pizza', 'Drinks', 'Dessert', 'Asian'];
 
   return (
     <div className="flex flex-col">
@@ -117,15 +111,15 @@ export function LandingPage() {
           <div className="flex flex-wrap justify-center gap-8">
             {cuisines.map((c) => (
               <button 
-                key={c.name}
-                onClick={() => navigate(`/restaurants?cuisine=${c.name}`)}
+                key={c}
+                onClick={() => navigate(`/restaurants?query=${encodeURIComponent(c)}`)}
                 className="group flex flex-col items-center gap-4 p-8 bg-white rounded-card shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-44"
               >
                 <span className="text-5xl grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110">
-                  {c.icon}
+                  🍽️
                 </span>
                 <span className="label-md font-bold text-text-muted group-hover:text-accent transition-colors">
-                  {c.name}
+                  {c}
                 </span>
               </button>
             ))}
@@ -154,10 +148,10 @@ export function LandingPage() {
                 step: '03',
                 title: 'Direct Delivery',
                 desc: 'Handled with care, delivered fresh. No extra stops, just pure culinary focus.',
-                icon: Truck // Wait, I didn't import Truck yet, let me add it.
+                icon: Truck
               }
             ].map((s, idx) => {
-              const Icon = s.icon === 'Truck' ? ChefHat : s.icon; // Fallback or import properly. Wait, I'll import Truck.
+              const Icon = s.icon;
               return (
                 <div key={s.step} className="group relative pt-12 border-t border-border/40">
                   <span className="font-serif text-8xl font-black text-accent/5 absolute top-0 -left-4 pointer-events-none group-hover:text-accent/10 transition-colors">

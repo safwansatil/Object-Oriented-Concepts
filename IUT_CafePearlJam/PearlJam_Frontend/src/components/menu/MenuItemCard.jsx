@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * MenuItemCard: Editorial-style card for menu items.
  */
 export function MenuItemCard({ item, onAdd }) {
-  const { id, name, description, price, imageUrl, isVegetarian, isPopular } = item;
+  const { id, name, description, basePrice, imageUrl, isVegetarian, isPopular } = item;
 
   return (
     <div className="group surface-card overflow-hidden hover:-translate-y-1 transition-all duration-300 flex border border-border/10">
@@ -36,7 +36,7 @@ export function MenuItemCard({ item, onAdd }) {
         
         <div className="flex items-center justify-between">
           <span className="font-serif text-2xl font-bold text-text-primary">
-            ${price.toFixed(2)}
+            ${Number(basePrice || 0).toFixed(2)}
           </span>
           <Button 
             size="sm" 
@@ -67,7 +67,7 @@ MenuItemCard.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
-    price: PropTypes.number.isRequired,
+    basePrice: PropTypes.number.isRequired,
     imageUrl: PropTypes.string,
     isVegetarian: PropTypes.bool,
     isPopular: PropTypes.bool,

@@ -19,14 +19,10 @@ export const useAuth = () => {
   })
 
   const logout = useCallback(async () => {
-    try {
-      await authApi.logoutApi()
-    } finally {
-      setUser(null)
-      localStorage.removeItem('pearljam-user')
-      queryClient.clear()
-      window.location.href = '/'
-    }
+    setUser(null)
+    localStorage.removeItem('pearljam-user')
+    queryClient.clear()
+    window.location.href = '/'
   }, [queryClient])
 
   const isAuthenticated = !!user

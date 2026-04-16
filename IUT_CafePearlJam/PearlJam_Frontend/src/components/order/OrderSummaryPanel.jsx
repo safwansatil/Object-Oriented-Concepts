@@ -53,7 +53,7 @@ export function OrderSummaryPanel({ showItems = true, isCheckout = false }) {
                 <div className="flex items-start justify-between mb-1">
                   <h4 className="label-md font-bold text-text-primary">{item.name}</h4>
                   <span className="label-md font-bold text-text-primary">
-                    ${((item.price + item.selectedAddons.reduce((s, a) => s + a.price, 0)) * item.quantity).toFixed(2)}
+                    ${((Number(item.basePrice || 0) + item.selectedAddons.reduce((s, a) => s + (a.extraPrice || 0), 0)) * item.quantity).toFixed(2)}
                   </span>
                 </div>
                 

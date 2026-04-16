@@ -40,4 +40,5 @@ public final class AppConstants {
     public static final String ATTR_ORDER_SERVICE = "order_service";
     public static final String ATTR_COUPON_SERVICE = "coupon_service";
     public static final String ATTR_DELIVERY_ZONE_SERVICE = "delivery_zone_service";
+    public static final String ATTR_MENU_ITEM_ADDON_DAO = "menu_item_addon_dao";
 }

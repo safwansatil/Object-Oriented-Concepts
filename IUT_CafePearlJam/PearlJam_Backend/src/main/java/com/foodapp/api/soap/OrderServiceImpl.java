@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
             Order order = orderService.getOrderDetails(orderId);
             return new OrderStatusResponse(order.getId(), order.getStatus().name(), order.getPlacedAt(), order.getConfirmedAt(), order.getDeliveredAt());
         } catch (Exception e) {
-            return null;
+            return new OrderStatusResponse(orderId, "NOT_FOUND", null, null, null);
         }
     }
 

@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
  * RestaurantCard: Image-first editorial-style card for restaurant listings.
  */
 export function RestaurantCard({ restaurant }) {
-  const { id, name, imageUrl, cuisineType, rating, deliveryTime, isOpen, address } = restaurant;
+  const { id, name, imageUrl, cuisineType, rating, deliveryTime, active, address } = restaurant;
+  const isOpen = active !== false;
 
   return (
     <Link 

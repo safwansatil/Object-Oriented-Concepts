@@ -20,16 +20,18 @@ public class OrderService {
     private final RestaurantDAO restaurantDAO;
     private final DeliveryZoneDAO deliveryZoneDAO;
     private final MenuItemAddonDAO addonDAO;
+    private final CouponService couponService;
 
     public OrderService(OrderDAO orderDAO, OrderItemDAO orderItemDAO, MenuItemDAO menuItemDAO, 
-                         RestaurantDAO restaurantDAO, DeliveryZoneDAO deliveryZoneDAO, 
-                         MenuItemAddonDAO addonDAO) {
+                         RestaurantDAO restaurantDAO, DeliveryZoneDAO deliveryZoneDAO,
+                         MenuItemAddonDAO addonDAO, CouponService couponService) {
         this.orderDAO = orderDAO;
         this.orderItemDAO = orderItemDAO;
         this.menuItemDAO = menuItemDAO;
         this.restaurantDAO = restaurantDAO;
         this.deliveryZoneDAO = deliveryZoneDAO;
         this.addonDAO = addonDAO;
+        this.couponService = couponService;
     }
 
     /**
@@ -111,17 +113,19 @@ public class OrderService {
             }
 
             // 5. Lookup delivery fee
-            DeliveryZone zone = deliveryZoneDAO.findByRestaurantAndArea(restaurantId, deliveryArea)
-                    .orElseThrow(() -> new BusinessRuleException("Restaurant does not deliver to " + deliveryArea));
-            double deliveryFee = zone.getDeliveryFee();
+            double deliveryFee = deliveryZoneDAO.findByRestaurantAndArea(restaurantId, deliveryArea)
+                    .map(DeliveryZone::getDeliveryFee)
+                    .orElse(0.0);
 
-            double total = subtotal + deliveryFee;
+            double discountAmount = couponService.applyDiscount(couponCode, subtotal);
+            double total = subtotal + deliveryFee - discountAmount;
             String now = TimeUtil.nowISO();
+            PaymentStatus paymentStatus = "CASH_ON_DELIVERY".equalsIgnoreCase(paymentMethod) ? PaymentStatus.UNPAID : PaymentStatus.PAID;
 
             // 7. Save Order
             Order order = new Order(orderId, customerId, restaurantId, deliveryAddress, deliveryArea, 
-                                    subtotal, deliveryFee, 0.0, total, OrderStatus.PENDING, 
-                                    PaymentStatus.UNPAID, paymentMethod, specialInstructions, now, null, null);
+                                    subtotal, deliveryFee, discountAmount, total, OrderStatus.PENDING,
+                                    paymentStatus, paymentMethod, specialInstructions, now, null, null);
             orderDAO.save(order);
 
             // 8. Save Order Items

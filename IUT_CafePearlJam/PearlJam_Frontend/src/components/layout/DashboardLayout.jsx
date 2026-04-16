@@ -10,7 +10,7 @@ export function DashboardLayout() {
 
   if (isLoading) return null;
   if (!isAuthenticated) return <Navigate to="/login" />;
-  if (user.role !== 'RESTAURANT_OWNER' && user.role !== 'RIDER') return <Navigate to="/" />;
+  if (user.role !== 'RESTAURANT_OWNER') return <Navigate to="/" />;
 
   return (
     <div className="flex min-h-screen bg-surface/30">

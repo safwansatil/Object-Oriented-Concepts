@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { LogIn, ArrowRight, ShieldCheck, Mail, Lock, User, Briefcase, Zap } from 'lucide-react';
+import { ArrowRight, User, Briefcase, Zap } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useMutation } from '@tanstack/react-query';
 
@@ -96,7 +96,7 @@ export function Register() {
                   <p className="text-xs text-text-muted">Create your multi-purpose PearlJam account.</p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   <button 
                     type="button"
                     onClick={() => handleRoleSelect('CUSTOMER')}
@@ -118,17 +118,6 @@ export function Register() {
                   >
                     <Briefcase size={18} />
                     <span className="label-md font-bold text-[9px] uppercase">Owner</span>
-                  </button>
-                  <button 
-                    type="button"
-                    onClick={() => handleRoleSelect('RIDER')}
-                    className={cn(
-                      "flex flex-col items-center gap-2 p-4 rounded-card border-2 transition-all",
-                      formData.role === 'RIDER' ? "border-accent bg-accent/5 text-accent" : "border-border/30 hover:border-accent/40 opacity-60"
-                    )}
-                  >
-                    <Zap size={18} />
-                    <span className="label-md font-bold text-[9px] uppercase">Rider</span>
                   </button>
                 </div>
 

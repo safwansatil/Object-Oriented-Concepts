@@ -66,6 +66,20 @@ CREATE TABLE IF NOT EXISTS menu_item_addons (
     FOREIGN KEY (menu_item_id) REFERENCES menu_items(id)
 );
 
+-- Coupons table
+CREATE TABLE IF NOT EXISTS coupons (
+    id TEXT PRIMARY KEY,
+    code TEXT UNIQUE NOT NULL,
+    description TEXT,
+    discount_type TEXT CHECK(discount_type IN ('PERCENTAGE', 'FLAT')) NOT NULL,
+    discount_value REAL NOT NULL,
+    minimum_order_value REAL DEFAULT 0,
+    max_uses INTEGER,
+    current_uses INTEGER DEFAULT 0,
+    expires_at TEXT,
+    is_active INTEGER DEFAULT 1
+);
+
 -- Orders table
 CREATE TABLE IF NOT EXISTS orders (
     id TEXT PRIMARY KEY,
@@ -127,3 +141,4 @@ CREATE INDEX IX_orders_status ON orders(status);
 CREATE INDEX IX_order_items_order ON order_items(order_id);
 CREATE INDEX IX_delivery_zones_restaurant ON delivery_zones(restaurant_id);
 CREATE INDEX IX_delivery_zones_area ON delivery_zones(area_name);
+CREATE INDEX IX_coupons_code ON coupons(code);

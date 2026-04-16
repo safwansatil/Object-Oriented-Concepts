@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Servlet for restaurant operations.
@@ -55,7 +56,17 @@ public class RestaurantServlet extends BaseServlet {
 
     private void handleList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String area = req.getParameter("area");
-        List<Restaurant> list = restaurantService.getRestaurantsInArea(area);
+        String query = req.getParameter("query");
+        String sort = req.getParameter("sort");
+        List<Restaurant> list = (query != null && !query.isBlank())
+                ? restaurantService.search(query, area)
+                : (area == null || area.isBlank() ? restaurantService.search("", null) : restaurantService.getRestaurantsInArea(area));
+
+        if ("name".equalsIgnoreCase(sort)) {
+            list = list.stream().sorted((a, b) -> a.getName().compareToIgnoreCase(b.getName())).collect(Collectors.toList());
+        } else if ("cuisine".equalsIgnoreCase(sort)) {
+            list = list.stream().sorted((a, b) -> a.getCuisineType().compareToIgnoreCase(b.getCuisineType())).collect(Collectors.toList());
+        }
         writeJson(resp, 200, list);
     }
 

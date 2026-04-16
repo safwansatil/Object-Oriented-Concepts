@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/foodapp/api'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/foodapp'
 
 const client = axios.create({
   baseURL: API_BASE_URL,
@@ -23,7 +23,20 @@ client.interceptors.request.use(
 
 // Response interceptor: handle 401 and generic errors
 client.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    const body = response.data
+    if (body && typeof body === 'object' && 'status' in body && 'data' in body) {
+      if (body.status === 'error') {
+        return Promise.reject({
+          message: body.message || 'Request failed',
+          status: response.status,
+          code: 'API_ERROR',
+        })
+      }
+      return body.data
+    }
+    return body
+  },
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('pearljam-user')

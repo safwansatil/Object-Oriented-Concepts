@@ -5,8 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { LogIn, ArrowRight, ShieldCheck, Mail, Lock } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { ArrowRight, ShieldCheck, Mail, Lock } from 'lucide-react';
 
 /**
  * Login: Minimalist, editorial-style login page.
@@ -72,9 +71,6 @@ export function Login() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center px-1">
                   <Label className="label-md font-bold uppercase tracking-widest text-[10px]">Password</Label>
-                  <Link to="/forgot-password" size="sm" className="text-[10px] font-bold text-accent uppercase tracking-widest hover:underline">
-                    Forgot?
-                  </Link>
                 </div>
                 <div className="relative group">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-accent transition-colors" size={20} />
@@ -122,19 +118,6 @@ export function Login() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Floating Test Credentials (Optional/Demo) */}
-        <div className="mt-12 p-6 bg-white/50 backdrop-blur-sm rounded-card border border-border/10 text-center">
-          <p className="text-[10px] text-text-muted font-bold uppercase tracking-widest mb-2">Test Environment Credentials</p>
-          <div className="flex items-center justify-center gap-8 text-xs text-text-muted">
-            <div>
-              <span className="font-bold text-accent">Customer:</span> customer@pearljam.com
-            </div>
-            <div>
-              <span className="font-bold text-accent">Owner:</span> owner@pearljam.com
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

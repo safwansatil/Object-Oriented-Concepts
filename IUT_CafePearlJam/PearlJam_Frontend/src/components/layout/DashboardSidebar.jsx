@@ -1,5 +1,5 @@
 import { NavLink, Link } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, UtensilsCrossed, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, UtensilsCrossed, LogOut } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { cn } from '../../lib/utils';
 
@@ -13,7 +13,6 @@ export function DashboardSidebar() {
     { name: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
     { name: 'Orders', icon: ShoppingCart, path: '/dashboard/orders' },
     { name: 'Menu Management', icon: UtensilsCrossed, path: '/dashboard/menu' },
-    { name: 'Settings', icon: Settings, path: '/dashboard/settings' },
   ];
 
   return (
@@ -53,13 +52,6 @@ export function DashboardSidebar() {
           <LogOut size={20} />
           Sign Out
         </button>
-        
-        <div className="mt-4 px-4">
-          <Link to="/help" className="flex items-center gap-2 text-text-muted hover:text-accent transition-colors label-md font-medium text-xs">
-            <HelpCircle size={14} />
-            Support Center
-          </Link>
-        </div>
       </div>
     </div>
   );

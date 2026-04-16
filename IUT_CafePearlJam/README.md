@@ -1,129 +1,140 @@
-<div align="center">
+# Cafe PearlJam
 
-# 🍱 PearlJam
-### Food Delivery Application
+Cafe PearlJam is a food delivery system with a React frontend and a Java backend. Users can browse restaurants, place and track orders, and restaurant owners can manage menus and order status. The backend exposes both REST APIs for the frontend and SOAP/WSDL services per project requirements.
 
-*3rd Semester Software Engineering Project — Object Oriented Concepts II*
+## System Architecture
 
-![Java](https://img.shields.io/badge/Java-23-ED8B00?style=for-the-badge&logo=openjdk)
-![Vite](https://img.shields.io/badge/Frontend-React_Vite-646CFF?style=for-the-badge&logo=vite)
-![SOAP](https://img.shields.io/badge/API-SOAP%20/%20JAX--WS-43682b?style=for-the-badge)
-![License](https://img.shields.io/badge/License-Academic-blue?style=for-the-badge)
-
-</div>
-
----
-
-## 🎯 About The Project
-PearlJam is a high-impact, full-stack food delivery application built with a focus on clean, idiomatic Java and modern web design. Inspired by "Editorial Organicism," the UI offers a curated, magazine-like experience for users to discover and order from local kitchens.
-
-This project was developed for the **Object Oriented Concepts II** course (3rd Semester Software Engineering). It demonstrates advanced Java OOP principles, JAX-WS SOAP service implementation, and a robust layered architecture without the use of Spring Boot.
-
----
-
-## ✨ Features
-
-### 👤 Customer Features
-- **Restaurant Discovery:** Search for nearby kitchens by delivery area.
-- **Refined Search:** Browse by cuisine (Italian, Japanese, Artisanal, etc.) or restaurant name.
-- **Menu Curation:** View dishes with descriptions, pricing, and availability.
-- **Smart Checkout:** Apply coupon codes (WELCOME10) and manage cart quantities.
-- **Order Tracking:** Monitor order state from PENDING to DELIVERED.
-
-### Restaurant Features
-- **Menu Management:** Add/Edit/Delete categories and items.
-- **Inventory Control:** Real-time stock tracking and availability toggling.
-- **Order Dashboard:** Track incoming orders and update their status.
-- **Schedule Management:** Set opening and closing hours.
-
----
-
-##  Project Architecture
-
-### Package Structure
-The backend follows a strict one-class-per-functionality architectural pattern:
-```
-com.foodapp/
-├── api/             # API Layer (SOAP & REST-like Servlets)
-├── service/         # Pure Business Logic
-├── dao/             # JDBC Data Access Layer (SQLite)
-├── model/           # Domain Entities (POJOs)
-├── util/            # Helpers (Connection Pool, Hashers, etc.)
-├── config/          # App Configuration
-└── exception/       # Custom Exception Hierarchy
+```mermaid
+flowchart LR
+  FE[React Frontend<br/>http://localhost:5173] --> REST[REST API<br/>http://localhost:8080/foodapp/api/*]
+  REST --> BE[Java Servlet Backend<br/>Tomcat on :8080]
+  BE --> DB[(SQLite DB<br/>foodapp.db)]
+  BE --> SOAP[SOAP/WSDL Layer<br/>http://localhost:8080/foodapp/ws]
 ```
 
-### Tech Stack
+## Tech Stack
+
 | Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Backend** | Java 23 | Application logic |
-| **API** | Apache CXF / JAX-WS | SOAP service exposure |
-| **Frontend** | React / Vite / Tailwind | User interface |
-| **Data** | SQLite | Persistence |
-| **Build** | Maven | Dependency management |
+|---|---|---|
+| Frontend | React + Vite + Tailwind | UI and client routing |
+| Frontend State | TanStack Query + Zustand | Server state + cart state |
+| Frontend HTTP | Axios | REST calls + envelope handling |
+| Backend | Java Servlet + CXF + Maven Cargo | REST + SOAP runtime |
+| Database | SQLite | Persistent relational storage |
+| Protocols | REST/JSON + SOAP/WSDL | Client/backend integrations |
 
----
+## Repository Structure
 
-## 🚀 Getting Started
+```text
+IUT_CafePearlJam/
+├─ PearlJam_Backend/         # Java backend (REST + SOAP, DB, schema)
+├─ PearlJam_Frontend/        # React frontend app
+├─ project_requirements.txt  # Original project requirements
+└─ README.md                 # Master system guide
+```
+
+## How This Matches Requirements
+- Supports user-side flow: browse/search/sort restaurants, menu selection, order placement, coupon in payload, order tracking, payment simulation.
+- Supports restaurant-side flow: registration, menu category/item create, availability + stock management, order status updates, rider assignment.
+- Exposes SOAP/WSDL endpoints as required at `/foodapp/ws/*`.
+- Follows modular package/component design and documented structure.
+
+## Run Full System
 
 ### Prerequisites
-- **JDK 23**
-- **Maven 3.9+**
-- **Node.js 20+**
+- Java 23+
+- Maven 3.9+
+- Node.js 18+ (or newer LTS)
+- npm 9+
 
-### Installation
-
-**1. Clone the repository**
+### 1) Clone
 ```bash
-git clone <repository-url>
+git clone <your-repo-url>
 cd IUT_CafePearlJam
 ```
 
-**2. Backend Setup**
+### 2) Start Backend
 ```bash
 cd PearlJam_Backend
-# Build the project
-mvn clean package
-# Run the embedded Tomcat server
-mvn tomcat10:run
+mvn package cargo:run
 ```
-The backend will be available at `http://localhost:8080/`.
 
-**3. Frontend Setup**
+### 3) Start Frontend
 ```bash
 cd ../PearlJam_Frontend
-# Install dependencies
 npm install
-# Run the dev server
 npm run dev
 ```
-Open `http://localhost:5173` in your browser.
 
----
+### 4) Verify Running URLs
+- Frontend: `http://localhost:5173`
+- Backend base: `http://localhost:8080/foodapp`
+- REST sample: `http://localhost:8080/foodapp/api/restaurants`
+- SOAP service index: `http://localhost:8080/foodapp/ws`
+- WSDLs:
+  - `http://localhost:8080/foodapp/ws/users?wsdl`
+  - `http://localhost:8080/foodapp/ws/restaurants?wsdl`
+  - `http://localhost:8080/foodapp/ws/menu?wsdl`
+  - `http://localhost:8080/foodapp/ws/orders?wsdl`
 
-## 📡 API Reference
+## REST API Quick Reference
 
-PearlJam exposes five primary SOAP services:
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/restaurants` | List/search/sort restaurants |
+| GET | `/api/restaurants/{id}/menu` | Get restaurant menu |
+| POST | `/api/orders` | Place order (supports coupon code) |
+| GET | `/api/orders/{id}/status` | Track order status |
+| PATCH | `/api/orders/{id}/status` | Update order status |
+| PATCH | `/api/orders/{id}/payment` | Simulated payment processing |
+| PATCH | `/api/orders/{id}/assign-rider` | Assign rider (simulated) |
 
-- **UserService:** Handles registration, login, and profile management.
-- **OrderService:** Manages placement, status updates, and tracking of orders.
-- **MenuQueryService:** Retrieves restaurant menus and item details.
-- **RestaurantQueryService:** Provides kitchen discovery and metadata.
-- **CouponService:** Validates and lists discount coupons.
+## SOAP/WSDL Quick Reference
 
-### Example SOAP Request (Restaurant Search)
-```xml
-<ws:getRestaurantsByArea xmlns:ws="http://foodapp.com/ws">
-   <area>Gulshan</area>
-</ws:getRestaurantsByArea>
+| WSDL Endpoint | Service | Operations |
+|---|---|---|
+| `/ws/users?wsdl` | UserService | registerUser, login |
+| `/ws/restaurants?wsdl` | RestaurantQueryService | getRestaurantsByArea, searchRestaurants, getRestaurantDetails, getDeliveryZones |
+| `/ws/menu?wsdl` | MenuQueryService | getMenu, searchMenuItems, getItemAddons |
+| `/ws/orders?wsdl` | OrderService | placeOrder, getOrderStatus, getOrdersByCustomer, cancelOrder |
+
+## User Flow
+
+```mermaid
+flowchart LR
+  A[Browse Restaurants] --> B[Select Restaurant]
+  B --> C[Choose Menu Items]
+  C --> D[Apply Coupon + Place Order]
+  D --> E[Payment Simulation]
+  E --> F[Track Status]
 ```
 
----
+## Restaurant Owner Flow
 
-## 🎨 Design System
-PearlJam's UI  adheres to a **"Digital Greenhouse"** aesthetic with a forest green palette and Newsreader serif headings.
+```mermaid
+flowchart LR
+  A[Register Restaurant] --> B[Create Categories/Items]
+  B --> C[Toggle Availability/Stock]
+  C --> D[Receive Order ID]
+  D --> E[Update Status]
+  E --> F[Assign Rider]
+```
 
+## Database Schema
 
----
+```mermaid
+erDiagram
+  USERS ||--o{ RESTAURANTS : owns
+  RESTAURANTS ||--o{ MENU_CATEGORIES : has
+  RESTAURANTS ||--o{ MENU_ITEMS : has
+  MENU_CATEGORIES ||--o{ MENU_ITEMS : groups
+  MENU_ITEMS ||--o{ MENU_ITEM_ADDONS : has
+  USERS ||--o{ ORDERS : places
+  RESTAURANTS ||--o{ ORDERS : receives
+  ORDERS ||--o{ ORDER_ITEMS : contains
+  MENU_ITEMS ||--o{ ORDER_ITEMS : references
+  RESTAURANTS ||--o{ DELIVERY_ZONES : serves
+```
 
-*Built with ☕ Java and determination as a 3rd Semester Software Engineering student.*
+## GitHub
+- [github.com/safwansatil](https://github.com/safwansatil)

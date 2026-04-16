@@ -46,6 +46,13 @@ public class OrderServlet extends BaseServlet {
             String customerId = getPathParam(req, 1);
             List<Order> list = orderService.getOrdersByCustomer(customerId);
             writeJson(resp, 200, list);
+        } else if ("status".equals(sub)) {
+            Order order = orderService.getOrderDetails(id);
+            Map<String, Object> statusPayload = new java.util.HashMap<>();
+            statusPayload.put("orderId", order.getId());
+            statusPayload.put("status", order.getStatus());
+            statusPayload.put("updatedAt", order.getDeliveredAt() != null ? order.getDeliveredAt() : order.getConfirmedAt());
+            writeJson(resp, 200, statusPayload);
         } else {
             // /api/orders/{orderId}
             Order order = orderService.getOrderDetails(id);
@@ -73,7 +80,7 @@ public class OrderServlet extends BaseServlet {
                 (String) body.get("deliveryAddress"),
                 (String) body.get("deliveryArea"),
                 items,
-                null,
+                (String) body.get("couponCode"),
                 (String) body.get("paymentMethod"),
                 (String) body.get("specialInstructions")
             );
@@ -93,8 +100,12 @@ public class OrderServlet extends BaseServlet {
             Map<String, String> body = jsonMapper.fromJson(readBody(req), Map.class);
             try {
                 if ("status".equals(sub)) {
-                    Order order = orderService.updateStatus("actor", id, OrderStatus.valueOf(body.get("status").toUpperCase()));
+                    Order order = orderService.updateStatus(body.getOrDefault("actorId", "system"), id, OrderStatus.valueOf(body.get("status").toUpperCase()));
                     writeJson(resp, 200, order);
+                } else if ("assign-rider".equals(sub)) {
+                    writeJson(resp, 200, Map.of("orderId", id, "riderId", body.get("riderId"), "assigned", true));
+                } else if ("payment".equals(sub)) {
+                    writeJson(resp, 200, Map.of("orderId", id, "paymentStatus", "PAID", "message", "Payment processed (simulated)"));
                 } else {
                     writeError(resp, 400, "Unknown sub-resource");
                 }
